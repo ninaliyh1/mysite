@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<canvas id="tv-noise"></canvas>
+
+<div id="text-box">
+  <div id="title-bar">
+    <span id="title-text">ninaliyh.3dm</span>
+    <div id="window-controls">
+      <span class="win-btn">_</span>
+      <span class="win-btn">□</span>
+      <span class="win-btn">x</span>
+    </div>
+  </div>
+  <div id="window-body">
+    <h1>Hello! I am Nina~<br>你好！欢迎来到拟钠工作屋～</h1>
+ 
+    <p>my website is currently under construction...<span class="caret">|</span></p>
+    <p>网站还在施工...<span class="caret">|</span></p>
+    <p>thank you for your patience ~<span class="caret">|</span></p>
+    <p>请晚些再来哟～<span class="caret">|</span></p>
+  </div>
+</div>
+
+<!-- This JavaScript generates the noise from scratch -->
+  <script>
+    const canvas = document.getElementById('tv-noise');
+    const ctx = canvas.getContext('2d');
+
+    // We keep the internal resolution small (200x200) for high performance. 
+    // CSS will stretch it to fit the screen, giving it that chunky, retro TV look.
+    canvas.width = 200;
+    canvas.height = 200;
+
+    function renderNoise() {
+      const imageData = ctx.createImageData(canvas.width, canvas.height);
+      const data = imageData.data;
+      
+      // Loop through every pixel and assign a random black/white/gray color
+      for (let i = 0; i < data.length; i += 4) {
+        const color = Math.floor(Math.random() * 255);
+        data[i] = color;       // Red
+        data[i + 1] = color;   // Green
+        data[i + 2] = color;   // Blue
+        data[i + 3] = 255;     // Alpha (fully opaque)
+      }
+      
+      // Put the newly generated pixels onto the canvas
+      ctx.putImageData(imageData, 0, 0);
+      
+      // Ask the browser to run this function again on the next frame
+      requestAnimationFrame(renderNoise);
+    }
+
+    // Start the loop
+    renderNoise();
+  </script>
+
+</body>
+</html>
